@@ -149,11 +149,11 @@ for c in hdr:
             r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
 
 rows = [
-    ("Sample", "Definir la muestra de datos a usar", "Dataset sintético de ventas (ciudad + producto) cargado como ventas.txt, representativo para probar el pipeline sin requerir volumen masivo real."),
+    ("Sample", "Definir la muestra de datos a usar", "Se probó primero con un dataset sintético pequeño (ventas por ciudad/producto) para validar el pipeline, y luego se reemplazó por una muestra real de volumen significativo: el texto completo de Don Quijote de la Mancha (Project Gutenberg, dominio público), 2.2 MB / 38,059 líneas."),
     ("Explore", "Explorar estructura y disponibilidad de los datos/recursos", "Verificación de que los 5 servicios del cluster (NameNode, DataNode, ResourceManager, NodeManager, HistoryServer) estuvieran activos (docker compose ps, jps) antes de cargar datos."),
     ("Modify", "Preparar/transformar datos y entorno para el análisis", "Ajuste de la configuración de recursos (hadoop.env): la primera corrida quedó colgada en reduce 0% porque se pidieron 8192 MB para el reducer en un nodo de 8192 MB de capacidad total; se corrigió a 1024/1536 MB para que YARN pudiera asignar el contenedor."),
-    ("Model", "Aplicar el modelo/algoritmo de procesamiento", "Ejecución del job MapReduce wordcount sobre HDFS vía YARN (hadoop jar ... wordcount)."),
-    ("Assess", "Evaluar el resultado obtenido", "Lectura del resultado final en HDFS (part-r-00000) y validación de los contadores del job (Map input records=5, Reduce output records=9, Job completed successfully)."),
+    ("Model", "Aplicar el modelo/algoritmo de procesamiento", "Ejecución del job MapReduce wordcount sobre HDFS vía YARN (hadoop jar ... wordcount) sobre las 38,059 líneas del texto."),
+    ("Assess", "Evaluar el resultado obtenido", "Lectura del resultado final en HDFS (part-r-00000) y validación de los contadores del job (Map input records=38,059, Reduce output records=39,755 palabras únicas, Job completed successfully)."),
 ]
 for a, b_, c_ in rows:
     row = table.add_row().cells
@@ -200,10 +200,11 @@ add_image(doc, f"{EV}/img_02_jps.png",
           "Figura 2. NameNode, DataNode, ResourceManager y NodeManager activos.")
 
 h2(doc, "4.4 Carga de datos en HDFS")
-body(doc, "Se crea el directorio de trabajo en HDFS y se sube el dataset de ventas (ciudad y producto por "
-          "transacción) para ser procesado por el job MapReduce.")
+body(doc, "Se crea el directorio de trabajo en HDFS y se sube un dataset de volumen real: el texto completo "
+          "de 'Don Quijote de la Mancha' (edición en español de Project Gutenberg, dominio público), "
+          "2,225,803 bytes (2.2 MB) en 38,059 líneas, para ser procesado por el job MapReduce.")
 add_image(doc, f"{EV}/img_03_hdfs.png",
-          "Figura 3. Dataset ventas.txt replicado y disponible en HDFS.")
+          "Figura 3. Dataset don_quijote.txt (2.2 MB) replicado y disponible en HDFS.")
 
 h2(doc, "4.5 Incidente de configuración y corrección")
 body(doc,
@@ -216,15 +217,23 @@ body(doc,
 
 h2(doc, "4.6 Ejecución del job MapReduce (wordcount) vía YARN")
 add_image(doc, f"{EV}/img_04_job.png",
-          "Figura 4. Job enviado a YARN, map 100% / reduce 100%, completado exitosamente.")
+          "Figura 4. Job sobre las 38,059 líneas del texto: map 100% / reduce 100%, completado exitosamente.")
+body(doc,
+     "El job procesó 38,059 registros de entrada (líneas) y emitió 389,656 pares clave-valor en la fase "
+     "Map (una por cada palabra encontrada). La fase Combine redujo eso a 39,755 claves únicas antes de "
+     "enviarlas por la red al reducer (Reduce shuffle bytes=601,995, frente a Map output bytes=3,740,265 "
+     "sin combinar) — evidencia directa de por qué el combiner importa en Hadoop: reduce el tráfico de red "
+     "entre las fases Map y Reduce.")
 
 h2(doc, "4.7 Resultado final")
 add_image(doc, f"{EV}/img_05_result.png",
-          "Figura 5. Conteo final por ciudad y producto, leído directamente desde HDFS.")
+          "Figura 5. Top 15 palabras más frecuentes, de un total de 39,755 palabras únicas, leído desde HDFS.")
 body(doc,
-     "Lima concentra la mayor cantidad de menciones (11) entre las ciudades y Laptop es el producto con más "
-     "menciones (8), lo cual, en un escenario real de ventas, se traduciría en priorizar inventario y "
-     "logística para esa ciudad y ese producto.")
+     "Las palabras más frecuentes son artículos, preposiciones y conjunciones ('que', 'de', 'y', 'la', 'a', "
+     "'el'...), lo esperable en cualquier texto largo en español (stopwords). En un caso de negocio real, "
+     "este mismo job —sin cambiar una línea de código— se aplicaría para contar términos relevantes "
+     "(productos, quejas, menciones de marca) sobre millones de reseñas o tickets de soporte en vez de un "
+     "libro.")
 
 doc.add_page_break()
 

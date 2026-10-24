@@ -1,9 +1,9 @@
 {
-  "title": "Resultado final — conteo por ciudad y producto",
+  "title": "Resultado final — top 15 palabras mas frecuentes (de 39,755 unicas)",
   "blocks": [
     {
-      "cmd": "hdfs dfs -cat /user/root/output/part-r-00000",
-      "out": "Arequipa    6\nCusco       4\nLaptop      8\nLima        11\nMonitor     4\nMouse       4\nPiura       3\nTeclado     4\nTrujillo    6"
+      "cmd": "hdfs dfs -cat /user/root/output-quijote/part-r-00000 | sort -k2 -nr | head -15",
+      "out": "que    19546\nde     18133\ny      15976\nla     10329\na      9627\nel     8009\nen     7941\nno     5622\nse     4751\nlos    4701\ncon    4119\npor    3763\nlas    3440\nlo     3418\nle     3405"
     }
   ]
 }
