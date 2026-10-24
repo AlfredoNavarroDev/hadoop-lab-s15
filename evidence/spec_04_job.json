@@ -1,9 +1,0 @@
-{
-  "title": "MapReduce — job wordcount sobre Don Quijote (2.2 MB) vía YARN",
-  "blocks": [
-    {
-      "cmd": "hadoop jar hadoop-mapreduce-examples-3.2.1.jar wordcount /user/root/input-quijote /user/root/output-quijote",
-      "out": "INFO mapreduce.Job: The url to track the job: http://resourcemanager:8088/proxy/application_1792805955208_0002/\nINFO mapreduce.Job: Running job: job_1792805955208_0002\nINFO mapreduce.Job: Job job_1792805955208_0002 running in uber mode : false\nINFO mapreduce.Job:  map 0% reduce 0%\nINFO mapreduce.Job:  map 100% reduce 0%\nINFO mapreduce.Job:  map 100% reduce 100%\nINFO mapreduce.Job: Job job_1792805955208_0002 completed successfully\nINFO mapreduce.Job: Counters: 54\n  Map input records=38059\n  Map output records=389656\n  Combine input records=389656\n  Combine output records=39755\n  Reduce input records=39755\n  Reduce output records=39755\n  Shuffled Maps =1\n  Failed Shuffles=0\n  Bytes Read=2225803\n  Bytes Written=446606"
-    }
-  ]
-}

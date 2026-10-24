@@ -11,14 +11,11 @@ Docker hace el entorno reproducible en cualquier equipo del grupo con un solo co
 hadoop-docker/
 ├── docker-compose.yml    # Define los 5 servicios del cluster
 ├── hadoop.env             # Configuración de HDFS/YARN/MapReduce (core-site, hdfs-site, yarn-site, mapred-site)
-├── data/
-│   └── don_quijote.txt    # Dataset real (2.2 MB, Project Gutenberg, dominio público) usado en el job wordcount
-└── evidence/
-    ├── render_terminal.py # Script que renderiza capturas de terminal (código+salida) a PNG para el PDF
-    ├── spec_*.json         # Contenido (comando + salida real) de cada captura
-    ├── img_*.png            # Capturas generadas, embebidas en el documento final
-    └── build_doc.py        # Genera el Word completo (GLAB-S15-INTG-5-DESARROLLO.docx) con todas las secciones
+└── data/
+    └── don_quijote.txt    # Dataset real (2.2 MB, Project Gutenberg, dominio público) usado en el job wordcount
 ```
+
+Las capturas de código+salida y el documento final (PDF) se entregan aparte en la plataforma del curso.
 
 ## Componentes del cluster (docker-compose.yml)
 
@@ -60,16 +57,3 @@ pedía `mapreduce.reduce.memory.mb=8192`, el 100% de la capacidad del único Nod
 ese contenedor. Se corrigió bajando `map` a 1024 MB y `reduce` a 1536 MB en `hadoop.env`, se recrearon
 `resourcemanager` y `nodemanager` (`docker compose up -d --force-recreate resourcemanager nodemanager`), y
 el job completó en segundos.
-
-## Generación de evidencia para el PDF
-
-`evidence/render_terminal.py` toma un JSON (`spec_*.json` con comando + salida real copiada de la terminal)
-y genera un PNG estilo terminal. `evidence/build_doc.py` arma el `.docx` final insertando esas imágenes y
-el texto de cada sección del laboratorio (SEMMA, arquitectura, aplicabilidad Big Data, reflexión de
-desarrollo sostenible). Para regenerar todo:
-
-```bash
-cd hadoop-docker/evidence
-for f in spec_*.json; do python render_terminal.py "$f" "${f/spec_/img_}.png"; done
-python build_doc.py
-```

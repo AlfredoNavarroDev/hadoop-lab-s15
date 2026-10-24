@@ -1,9 +1,0 @@
-{
-  "title": "HDFS — carga del dataset (Don Quijote, Project Gutenberg)",
-  "blocks": [
-    {"cmd": "hdfs dfs -mkdir -p /user/root/input-quijote", "out": ""},
-    {"cmd": "hdfs dfs -put /data/don_quijote.txt /user/root/input-quijote/", "out": ""},
-    {"cmd": "hdfs dfs -ls /user/root/input-quijote", "out": "Found 1 items\n-rw-r--r--   3 root supergroup   2225803 2026-10-24 01:53 /user/root/input-quijote/don_quijote.txt"},
-    {"cmd": "head -c 280 /data/don_quijote.txt", "out": "The Project Gutenberg eBook of Don Quijote\n\nThis eBook is for the use of anyone anywhere in the United States and\nmost other parts of the world at no cost and with almost no restrictions\nwhatsoever. ...\n\n[archivo completo: 2,225,803 bytes / 38,059 lineas]"}
-  ]
-}

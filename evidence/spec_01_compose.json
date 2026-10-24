@@ -1,9 +1,0 @@
-{
-  "title": "docker compose ps — cluster Hadoop (HDFS + YARN)",
-  "blocks": [
-    {
-      "cmd": "docker compose ps",
-      "out": "NAME              IMAGE                                                   STATUS                    PORTS\ndatanode          bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8        Up (healthy)              0.0.0.0:9864->9864/tcp\nhistoryserver     bde2020/hadoop-historyserver:2.0.0-hadoop3.2.1-java8   Up (healthy)              0.0.0.0:8188->8188/tcp\nnamenode          bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8        Up (healthy)              0.0.0.0:9000->9000/tcp, 0.0.0.0:9870->9870/tcp\nnodemanager       bde2020/hadoop-nodemanager:2.0.0-hadoop3.2.1-java8     Up (healthy)              0.0.0.0:8042->8042/tcp\nresourcemanager   bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8 Up (healthy)              0.0.0.0:8088->8088/tcp"
-    }
-  ]
-}

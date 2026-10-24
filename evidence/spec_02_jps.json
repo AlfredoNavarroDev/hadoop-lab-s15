@@ -1,9 +1,0 @@
-{
-  "title": "jps — procesos Java (daemons) por contenedor",
-  "blocks": [
-    {"cmd": "docker exec namenode jps", "out": "384 NameNode\n520 Jps"},
-    {"cmd": "docker exec datanode jps", "out": "306 DataNode\n450 Jps"},
-    {"cmd": "docker exec resourcemanager jps", "out": "300 ResourceManager\n615 Jps"},
-    {"cmd": "docker exec nodemanager jps", "out": "303 NodeManager\n512 Jps"}
-  ]
-}
