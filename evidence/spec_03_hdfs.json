@@ -1,0 +1,9 @@
+{
+  "title": "HDFS — carga del dataset de ventas",
+  "blocks": [
+    {"cmd": "hdfs dfs -mkdir -p /user/root/input", "out": ""},
+    {"cmd": "hdfs dfs -put /data/ventas.txt /user/root/input/", "out": ""},
+    {"cmd": "hdfs dfs -ls /user/root/input", "out": "Found 1 items\n-rw-r--r--   3 root supergroup   349 2026-10-24 01:10 /user/root/input/ventas.txt"},
+    {"cmd": "hdfs dfs -cat /user/root/input/ventas.txt", "out": "Lima Arequipa Lima Trujillo Lima Cusco Arequipa Lima Trujillo Piura\nArequipa Cusco Lima Piura Trujillo Lima Arequipa Cusco Lima Trujillo\nLaptop Mouse Teclado Laptop Monitor Mouse Laptop Teclado Monitor Laptop\nMouse Teclado Laptop Monitor Laptop Mouse Laptop Teclado Monitor Laptop\nLima Lima Lima Arequipa Trujillo Cusco Piura Lima Arequipa Trujillo"}
+  ]
+}

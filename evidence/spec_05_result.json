@@ -1,0 +1,9 @@
+{
+  "title": "Resultado final — conteo por ciudad y producto",
+  "blocks": [
+    {
+      "cmd": "hdfs dfs -cat /user/root/output/part-r-00000",
+      "out": "Arequipa    6\nCusco       4\nLaptop      8\nLima        11\nMonitor     4\nMouse       4\nPiura       3\nTeclado     4\nTrujillo    6"
+    }
+  ]
+}
